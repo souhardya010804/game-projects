@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catch the Falling Object</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            background-color: lightblue;
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Catch the Falling Object</h1>
+    <canvas id="gameCanvas" width="400" height="500"></canvas>
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let basket = { x: 175, y: 450, width: 50, height: 10 };
+        let ball = { x: Math.random() * 350, y: 0, radius: 10, speed: 2 };
+        let score = 0;
+        let gameOver = false;
+
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "ArrowLeft" && basket.x > 0) {
+                basket.x -= 20;
+            } else if (event.key === "ArrowRight" && basket.x < 350) {
+                basket.x += 20;
+            }
+        });
+
+        function drawBasket() {
+            ctx.fillStyle = "brown";
+            ctx.fillRect(basket.x, basket.y, basket.width, basket.height);
+        }
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = "red";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function update() {
+            if (gameOver) return;
+            
+            ball.y += ball.speed;
+            if (ball.y > canvas.height) {
+                gameOver = true;
+                alert("Game Over! Your Score: " + score);
+                document.location.reload();
+            }
+            
+            if (
+                ball.y + ball.radius >= basket.y &&
+                ball.x >= basket.x &&
+                ball.x <= basket.x + basket.width
+            ) {
+                score++;
+                ball.y = 0;
+                ball.x = Math.random() * 350;
+                ball.speed += 0.2;
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBasket();
+            drawBall();
+            ctx.fillStyle = "black";
+            ctx.fillText("Score: " + score, 10, 20);
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Portal - Sign Up</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <h1>Create Account</h1>
+            <form id="signupForm" onsubmit="return handleSignup(event)">
+                <div class="input-group">
+                    <input type="text" id="username" required placeholder="Username">
+                </div>
+                <div class="input-group">
+                    <input type="email" id="email" required placeholder="Email">
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" required placeholder="Password">
+                </div>
+                <div class="input-group">
+                    <input type="password" id="confirmPassword" required placeholder="Confirm Password">
+                </div>
+                <button type="submit">Sign Up</button>
+                <p class="switch-form">
+                    Already have an account? <a href="login.html">Login</a>
+                </p>
+            </form>
+        </div>
+    </div>
+    <script src="auth.js"></script>
+</body>
+</html>
